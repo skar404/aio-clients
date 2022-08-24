@@ -2,6 +2,7 @@ import asyncio
 from typing import Optional, Dict, Any
 
 import aiohttp
+from aiohttp import TraceConfig
 
 from .struct import Response, Options
 
@@ -15,18 +16,31 @@ class Writer:
 
 
 class HttpClient:
-    def __init__(self, host, timeout=10):
+    def __init__(
+            self, *,
+            host='',
+            timeout=10,
+            headers=None,
+            trace_config: TraceConfig = None,
+    ):
         loop = asyncio.get_event_loop()
         self.host = host
         self.timeout = aiohttp.ClientTimeout(
             total=timeout,
         )
-        self.session = aiohttp.ClientSession(loop=loop, timeout=self.timeout)
+        self.session = aiohttp.ClientSession(
+            loop=loop,
+            timeout=self.timeout,
+            trace_configs=[trace_config],
 
-        self.headers = {
-            'Content-Type': 'application/json',
-            'user-agent': 'podcast-toolbox'
-        }
+        )
+
+        self.headers = headers
+        if headers is None:
+            self.headers = {
+                'Content-Type': 'application/json',
+                'user-agent': 'aio-clients/0.1.0b3'
+            }
 
     async def request(
             self,
@@ -61,21 +75,20 @@ class HttpClient:
                 headers=main_headers,
                 **r,
         ) as response:
-            body, raw_body = None, None
-
-            if option.is_json:
-                body = await response.json()
-
-            if option.is_raw:
-                raw_body = await response.read()
-
-            return Response(
-                status=response.status,
-                body=body,
-                raw_body=raw_body,
+            r = Response(
+                code=response.status,
                 headers=response.headers,
                 option=option,
             )
+
+            if option.is_json:
+                r.json = await response.json()
+            if option.is_raw:
+                r.raw_body = await response.read()
+            if option.is_close_session:
+                await self.close()
+
+            return r
 
     async def get(self, path, *, headers: Optional = None, o: Options = None):
         return await self.request(method='GET', path=path, headers=headers, option=o)

@@ -1,23 +1,28 @@
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Dict, Optional
 
 from aiohttp import ClientTimeout
+from multidict import CIMultiDictProxy
 
 
 @dataclass
 class Options:
     is_json: bool = True
     is_raw: bool = False
+
+    # use only one reqeust
+    is_close_session: bool = False
+
     timeout: ClientTimeout = None
 
 
 @dataclass
 class Response:
-    status: int
-    body: Any
+    code: int
 
-    # FIXME: add type
-    headers: Any
+    headers: CIMultiDictProxy
 
     option: Options
-    raw_body: Any
+
+    json: Optional[Dict[Any, Any]] = None
+    raw_body: Optional[Any] = None
