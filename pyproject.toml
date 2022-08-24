@@ -1,9 +1,13 @@
 [tool.poetry]
-name = "aio-clinet"
-version = "0.1.0"
+name = "aio-clients"
+version = "0.1.0a"
 description = "Python aiohttp client"
 authors = ["Denis Malin <denis@malina.page>"]
 license = "MIT License"
+
+packages = [
+    { include = "aio_clients" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
