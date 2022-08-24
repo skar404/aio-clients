@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aio-clients"
-version = "0.1.0b4"
+version = "0.1.0b5"
 description = "Python aiohttp client"
 authors = ["Denis Malin <denis@malina.page>"]
 license = "MIT License"
