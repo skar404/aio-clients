@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aio-clients"
-version = "0.1.0a2"
+version = "0.1.0b2"
 description = "Python aiohttp client"
 authors = ["Denis Malin <denis@malina.page>"]
 license = "MIT License"
@@ -16,8 +16,8 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-aiohttp = "^3.8.1"
+python = ">=3.6,<4.0"
+aiohttp = ">=3.8.0"
 
 [tool.poetry.dev-dependencies]
 
