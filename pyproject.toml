@@ -1,9 +1,15 @@
 [tool.poetry]
 name = "aio-clients"
-version = "0.1.0a"
+version = "0.1.0a2"
 description = "Python aiohttp client"
 authors = ["Denis Malin <denis@malina.page>"]
 license = "MIT License"
+
+readme = "README.md"
+
+homepage = "https://github.com/skar404/aio-clients"
+repository = "https://github.com/skar404/aio-clients"
+documentation = "https://github.com/skar404/aio-clients"
 
 packages = [
     { include = "aio_clients" }
