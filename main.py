@@ -1,13 +1,3 @@
-# aiohttp client
-
-### What is the difference from aiohttp.Client?
-
-It is simpler and as a Requests
-
-----
-# Example: 
-
-```python
 import asyncio
 from aio_clients import Http, Options
 
@@ -18,4 +8,3 @@ async def main():
 
 
 asyncio.run(main())
-```

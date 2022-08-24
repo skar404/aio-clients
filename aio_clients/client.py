@@ -15,7 +15,7 @@ class Writer:
         self.buffer.extend(data)
 
 
-class HttpClient:
+class Http:
     def __init__(
             self, *,
             host='',
@@ -28,11 +28,17 @@ class HttpClient:
         self.timeout = aiohttp.ClientTimeout(
             total=timeout,
         )
+
+        session_params = {}
+        if trace_config:
+            session_params['trace_configs'] = [
+                trace_config,
+            ]
+
         self.session = aiohttp.ClientSession(
             loop=loop,
             timeout=self.timeout,
-            trace_configs=[trace_config],
-
+            **session_params,
         )
 
         self.headers = headers
