@@ -79,6 +79,7 @@ class Http:
                 method=method,
                 url=url,
                 headers=main_headers,
+                ssl=option.is_ssl,
                 **r,
         ) as response:
             r = Response(

@@ -10,6 +10,9 @@ class Options:
     is_json: bool = True
     is_raw: bool = False
 
+    # off ssl validate
+    is_ssl: bool = True
+
     # use only one reqeust
     is_close_session: bool = False
 
