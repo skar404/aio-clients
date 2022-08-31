@@ -5,6 +5,15 @@
 It is simpler and as a Requests
 
 ----
+
+## Install beta:
+
+```bash
+pip install aio-clients
+```
+
+
+----
 # Example: 
 
 
