@@ -47,4 +47,4 @@ jobs:
       run: |
         pytest
       env:
-        ECHO_HOST: echo:8081
+        ECHO_HOST: localhost:8081
