@@ -21,11 +21,9 @@ jobs:
     services:
       echo:
         image: ealen/echo-server
-        options: >-
-          --health-cmd "curl localhost:80"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        ports:
+          # Opens tcp port 6379 on the host and service container
+          - 8081:80
 
     steps:
     - uses: actions/checkout@v3
@@ -49,4 +47,4 @@ jobs:
       run: |
         pytest
       env:
-        ECHO_HOST: echo:80
+        ECHO_HOST: echo:8081
