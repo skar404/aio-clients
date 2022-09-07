@@ -1,6 +1,6 @@
 # aiohttp client
 
-[![Tests](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml/badge.svg?branch=master)](https://github.com/skar404/aio-clients/actions/workflows/python-package.yml)
+[![Tests](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml)
 [![Published](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml)
 [![PyPi version](https://badgen.net/pypi/v/aio-clients/)](https://pypi.com/project/aio-clients)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aio-clients)](https://pypi.com/project/aio-clients)
