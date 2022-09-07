@@ -1,5 +1,12 @@
 # aiohttp client
 
+[![Test python package](https://github.com/skar404/aio-clients/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/skar404/aio-clients/actions/workflows/python-package.yml)
+[![Upload Python Package](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml)
+[![PyPi version](https://badgen.net/pypi/v/aio-clients/)](https://pypi.com/project/aio-clients)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aio-clients)](https://pypi.com/project/aio-clients)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/aio-clients)](https://pypi.com/project/aio-clients)
+[![PyPI - License](https://img.shields.io/pypi/l/aio-clients)](https://pypi.com/project/aio-clients)
+
 ### What is the difference from aiohttp.Client?
 
 It is simpler and as a Requests
