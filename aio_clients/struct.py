@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from aiohttp import ClientTimeout, TraceConfig, ClientResponse
 from multidict import CIMultiDictProxy

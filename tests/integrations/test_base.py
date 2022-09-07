@@ -1,3 +1,5 @@
+import os
+
 import aiohttp
 import pytest
 
@@ -5,7 +7,7 @@ from aio_clients.__version__ import __version__
 from aio_clients import Http, Options
 from aio_clients.multipart import Easy, Form, Writer
 
-ECHO_HOST = 'localhost:8081'
+ECHO_HOST = os.getenv('ECHO_HOST', 'localhost:8081')
 ECHO_URL = f'http://{ECHO_HOST}/ping'
 
 
@@ -52,7 +54,6 @@ async def test_request_json():
                     'user-agent': f'aio-clients/{__version__}', 'accept': '*/*',
                     'accept-encoding': 'gzip, deflate'}
     }
-
 
 
 @pytest.mark.integtest

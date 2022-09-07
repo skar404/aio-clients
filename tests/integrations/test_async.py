@@ -1,4 +1,5 @@
 import asyncio
+import os
 
 import pytest
 
@@ -6,7 +7,7 @@ from aio_clients import Http
 from aio_clients.multipart import Easy, Form
 from aio_clients.__version__ import __version__
 
-ECHO_HOST = 'localhost:8081'
+ECHO_HOST = os.getenv('ECHO_HOST', 'localhost:8081')
 ECHO_URL = f'http://{ECHO_HOST}/'
 
 
