@@ -2,10 +2,10 @@
 
 [![Tests](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml)
 [![Published](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml)
-[![PyPi version](https://badgen.net/pypi/v/aio-clients/)](https://pypi.com/project/aio-clients)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aio-clients)](https://pypi.com/project/aio-clients)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/aio-clients)](https://pypi.com/project/aio-clients)
-[![PyPI - License](https://img.shields.io/pypi/l/aio-clients)](https://pypi.com/project/aio-clients)
+[![PyPi version](https://badgen.net/pypi/v/aio-clients/)](https://pypi.org/project/aio-clients)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aio-clients)](https://pypi.org/project/aio-clients)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/aio-clients)](https://pypi.org/project/aio-clients)
+[![PyPI - License](https://img.shields.io/pypi/l/aio-clients)](https://pypi.org/project/aio-clients)
 
 ### What is the difference from aiohttp.Client?
 
