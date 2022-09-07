@@ -42,7 +42,7 @@ class Http:
         if self.base_option.user_agent:
             self.headers['user-agent'] = self.base_option.user_agent
 
-    async def request(
+    async def request(  # noqa: C901
             self,
             *,
             method: str,
