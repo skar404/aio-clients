@@ -21,6 +21,11 @@ jobs:
     services:
       echo:
         image: ealen/echo-server
+        options: >-
+          --health-cmd "curl localhost:80"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v3
