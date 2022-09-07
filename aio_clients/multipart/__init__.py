@@ -1,2 +1,2 @@
 from .struct import Form, File
-from .main import Easy
+from .main import Easy, Writer

@@ -1,14 +1,15 @@
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
-from aiohttp import ClientTimeout
+from aiohttp import ClientTimeout, TraceConfig, ClientResponse
 from multidict import CIMultiDictProxy
+
+from .__version__ import __version__
 
 
 @dataclass
 class Options:
     is_json: bool = True
-    is_raw: bool = False
 
     # off ssl validate
     is_ssl: bool = True
@@ -16,7 +17,9 @@ class Options:
     # use only one reqeust
     is_close_session: bool = False
 
-    timeout: ClientTimeout = None
+    timeout: ClientTimeout = ClientTimeout(10)
+    trace_config: Optional[TraceConfig] = None
+    user_agent: str = f'aio-clients/{__version__}'
 
 
 @dataclass
@@ -27,5 +30,11 @@ class Response:
 
     option: Options
 
-    json: Optional[Dict[Any, Any]] = None
-    raw_body: Optional[Any] = None
+    response: ClientResponse
+
+    body: Optional[Any] = None
+    json: Optional[Any] = None
+
+    async def read_json(self) -> Any:
+        self.json = await self.response.json()
+        return self.json

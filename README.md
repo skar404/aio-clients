@@ -12,12 +12,11 @@ It is simpler and as a Requests
 pip install aio-clients
 ```
 
-
 ----
-# Example: 
 
+# Example:
 
-## Base reqeust: 
+## Base reqeust:
 
 ```python
 import asyncio
@@ -25,8 +24,8 @@ from aio_clients import Http, Options
 
 
 async def main():
-    r = await Http().get('http://google.com', o=Options(is_json=False, is_raw=True, is_close_session=True))
-    print(f'code={r.code} body={r.raw_body}')
+    r = await Http().get('https://google.com', o=Options(is_json=False, is_close_session=True))
+    print(f'code={r.code} body={r.body}')
 
 
 asyncio.run(main())
@@ -38,7 +37,6 @@ asyncio.run(main())
 import asyncio
 
 import aiohttp
-
 from aio_clients import Http, Options
 
 
@@ -56,18 +54,47 @@ async def main():
     trace_config.on_request_end.append(on_request_end)
 
     http = Http(
-        host='http://google.com/search?q=',
-        trace_config=trace_config
+        host='https://google.com/search',
+        option=Options(trace_config=trace_config, is_json=False),
     )
 
     r = await asyncio.gather(
-        http.get('test', o=Options(is_json=False, is_raw=True)),
-        http.get('hello world', o=Options(is_json=False, is_raw=True)),
-        http.get('ping', o=Options(is_json=False, is_raw=True)),
+        http.get(q_params={'q': 'test'}),
+        http.get(q_params={'q': 'hello_world'}),
+        http.get(q_params={'q': 'ping'}),
     )
 
-    print(f'status code={[i.code for i in r]}')
+    print(f'status code={[i.code for i in r]} body={[i.body for i in r]}')
     await http.close()
+
+
+asyncio.run(main())
+```
+
+## Multipart reqeust:
+
+```python
+import asyncio
+from aio_clients import Http, Options
+from aio_clients.multipart import Easy, Form, File, Writer
+
+
+async def main():
+    with Easy('form-data') as form:
+        form.add_form(Form(key='chat_id', value=12345123))
+        form.add_form(Form(key='audio', value='hello world'))
+        form.add_form(File(key='file', value=b'hello world file', file_name='test.py'))
+
+    r = await Http(option=Options(is_close_session=True, is_json=False)).post(
+        'http://localhost:8081',
+        form=form,
+    )
+
+    writer = Writer()
+    await form.write(writer)
+
+    print(f'code={r.code} body={r.body}')
+    print(f'full body:\n{writer.buffer.decode()}')
 
 
 asyncio.run(main())
