@@ -47,6 +47,9 @@ jobs:
           mypy .
       - name: Test with pytest
         run: |
-          pytest
+          coverage run -m pytest
         env:
           ECHO_HOST: localhost:8081
+      - name: Coverage report
+        run: |
+          coverage report -m

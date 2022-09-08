@@ -1,6 +1,4 @@
 import sys
-from typing import Any
-from collections.abc import Callable
 
 if sys.version_info < (3, 10):
     # compatibility for python <3.10
@@ -8,11 +6,5 @@ if sys.version_info < (3, 10):
 else:
     from importlib import metadata
 
-try:
-    VERSION_TYPE = Callable[[str], str]
-except TypeError:
-    VERSION_TYPE = Any  # type: ignore
-
-version: VERSION_TYPE = metadata.version
-
+version = metadata.version
 __version__ = version("aio-clients")
