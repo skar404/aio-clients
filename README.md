@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-tests.yml)
 [![Published](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml/badge.svg)](https://github.com/skar404/aio-clients/actions/workflows/python-publish.yml)
+[![Coverage Status](https://coveralls.io/repos/github/skar404/aio-clients/badge.svg?branch=master)](https://coveralls.io/github/skar404/aio-clients?branch=master)
 [![PyPi version](https://badgen.net/pypi/v/aio-clients/)](https://pypi.org/project/aio-clients)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aio-clients)](https://pypi.org/project/aio-clients)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/aio-clients)](https://pypi.org/project/aio-clients)
