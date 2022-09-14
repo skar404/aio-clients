@@ -53,3 +53,8 @@ jobs:
       - name: Coverage report
         run: |
           coverage report -m
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
