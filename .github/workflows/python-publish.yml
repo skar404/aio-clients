@@ -36,3 +36,8 @@ jobs:
       run: |
         poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
         poetry publish
+
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
