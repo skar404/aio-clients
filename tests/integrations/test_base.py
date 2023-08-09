@@ -2,10 +2,12 @@ import os
 
 import aiohttp
 import pytest
+from aiohttp import ClientConnectorError
 
 from aio_clients.__version__ import __version__
 from aio_clients import Http, Options
 from aio_clients.multipart import Easy, Form, Writer
+from aio_clients.struct import Middleware
 
 ECHO_HOST = os.getenv('ECHO_HOST', 'localhost:8081')
 ECHO_URL = f'http://{ECHO_HOST}/ping'
@@ -265,3 +267,81 @@ async def test_request_query_params():
                     'user-agent': f'aio-clients/{__version__}', 'accept': '*/*',
                     'accept-encoding': 'gzip, deflate'}
     }
+
+
+@pytest.mark.integtest
+async def test_request_with_correct_fingerprint():
+    http = Http(
+        host='https://ulock.org/',
+        option=Options(
+            is_json=False,
+            is_ssl=None,
+            request_kwargs={
+                'fingerprint': bytes.fromhex('DAB4EC8A125FF4C539C2D1BFB34B2B68A59003705A1BEB51917D9AF614C6E519')}
+        ))
+    await http.get()
+
+
+@pytest.mark.integtest
+async def test_request_with_broken_fingerprint():
+    http = Http(
+        host='https://ulock.org/',
+        option=Options(
+            is_json=False,
+            is_ssl=None,
+            request_kwargs={'fingerprint': bytes.fromhex('0' * 64)}
+        ))
+    try:
+        await http.get()
+        assert False
+    except ClientConnectorError:
+        assert True
+
+
+@pytest.mark.integtest
+async def test_request_with_middleware_start():
+    async def middleware_set_token(headers, request_kwargs, **kwargs):
+        headers['X-Token'] = 'DAKSDAKOSJND 123'
+
+    async def middleware_set_trase(headers, request_kwargs, **kwargs):
+        headers['X-Trase'] = 'SuperTrase LDKJADQW'
+
+    http = Http(
+        host=ECHO_URL,
+        middleware=Middleware(
+            start=[middleware_set_token, middleware_set_trase],
+        )
+    )
+    r = await http.get()
+
+    assert r.json['request']['headers']['x-token'] == 'DAKSDAKOSJND 123'
+    assert r.json['request']['headers']['x-trase'] == 'SuperTrase LDKJADQW'
+
+
+@pytest.mark.integtest
+async def test_request_with_middleware_end():
+    data = {}
+
+    class APIError(Exception):
+        pass
+
+    async def middleware_update(response, **kwargs):
+        data['ok'] = True
+
+    async def middleware_error(response, **kwargs):
+        if response.code == 200:
+            raise APIError()
+
+    http = Http(
+        host=ECHO_URL,
+        middleware=Middleware(
+            end=[middleware_update, middleware_error],
+        )
+    )
+    try:
+        await http.get()
+        assert False
+    except APIError:
+        assert True
+
+    assert data['ok']
