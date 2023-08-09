@@ -6,6 +6,11 @@ if sys.version_info >= (3, 8):
 else:
     Protocol = object
 
+Q_PARAMS_TYPE = Optional[Union[
+    Dict[str, Union[str, int]],
+    List[Tuple[str, Union[str, int]]]
+]]
+
 
 class MiddlewareStart(Protocol):
     def __call__(
@@ -22,9 +27,3 @@ class MiddlewareEnd(Protocol):
             response,
             **kwargs
     ) -> Awaitable[None]: pass
-
-
-Q_PARAMS_TYPE = Optional[Union[
-    Dict[str, Union[str, int]],
-    List[Tuple[str, Union[str, int]]]
-]]
