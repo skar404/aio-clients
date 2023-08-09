@@ -14,7 +14,7 @@ It is simpler and as a Requests
 
 ----
 
-## Install beta:
+## Install:
 
 ```bash
 pip install aio-clients
