@@ -4,8 +4,8 @@ from typing import Protocol, Dict, Any, Awaitable, Optional, Union, Tuple, List
 class MiddlewareStart(Protocol):
     def __call__(
             self,
-            headers: Dict[str, str] | None = None,
-            request_kwargs: Dict[str, Any] | None = None,
+            headers: Optional[Dict[str, str]] = None,
+            request_kwargs: Optional[Dict[str, Any]] = None,
             **kwargs
     ) -> Awaitable[None]: pass
 

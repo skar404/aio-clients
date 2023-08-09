@@ -1,16 +1,12 @@
 import asyncio
 import copy
-from typing import Optional, Dict, Any, Union, Tuple, List
+from typing import Dict, Any, Optional
 
 import aiohttp
 
 from . import multipart
 from .struct import Response, Options, Middleware
-
-Q_PARAMS_TYPE = Optional[Union[
-    Dict[str, Union[str, int]],
-    List[Tuple[str, Union[str, int]]]
-]]
+from .types import Q_PARAMS_TYPE
 
 
 class Http:
@@ -18,8 +14,8 @@ class Http:
             self, *,
             host='',
             headers=None,
-            option: Options | None = None,
-            middleware: Middleware | None = None
+            option: Optional[Options] = None,
+            middleware: Optional[Middleware] = None
     ):
         loop = asyncio.get_event_loop()
         self.host = host
@@ -56,8 +52,8 @@ class Http:
 
     async def middleware_start(
             self, *,
-            headers: Dict[str, str] | None = None,
-            request_kwargs: Dict[str, Any] | None = None,
+            headers: Optional[Dict[str, str]] = None,
+            request_kwargs: Optional[Dict[str, Any]] = None,
             **kwargs
     ):
         for m in self._middleware_start_list:
@@ -90,7 +86,7 @@ class Http:
             data: Optional[Any] = None,
             form: Optional[multipart.Easy] = None,
 
-            option: Options | None = None,
+            option: Optional[Options] = None,
     ) -> Response:
         if not option:
             option = self.base_option
@@ -155,76 +151,72 @@ class Http:
             if option.is_close_session:
                 await self.close()
 
-    async def get(self, path: str | None = None, *,
+    async def get(self, path: Optional[str] = None, *,
                   headers: Optional[Dict[str, str]] = None,
                   q_params: Q_PARAMS_TYPE = None,
-                  o: Options | None = None) -> Response:
+                  o: Optional[Options] = None) -> Response:
         return await self.request(method='GET', path=path, query_params=q_params, headers=headers, option=o)
 
-    async def head(self, path: str | None = None, *,
+    async def head(self, path: Optional[str] = None, *,
                    headers: Optional[Dict[str, str]] = None,
                    q_params: Q_PARAMS_TYPE = None,
-                   o: Options | None = None) -> Response:
+                   o: Optional[Options] = None) -> Response:
         return await self.request(method='HEAD', path=path, query_params=q_params, headers=headers, option=o)
 
-    async def options(self, path: str | None = None, *,
+    async def options(self, path: Optional[str] = None, *,
                       headers: Optional[Dict[str, str]] = None,
                       q_params: Q_PARAMS_TYPE = None,
-                      o: Options | None = None) -> Response:
+                      o: Optional[Options] = None) -> Response:
         return await self.request(method='OPTIONS', path=path, query_params=q_params, headers=headers, option=o)
 
-    async def post(self, path: str | None = None, *,
+    async def post(self, path: Optional[str] = None, *,
                    q_params: Q_PARAMS_TYPE = None,
                    json: Optional[Any] = None,
                    data: Optional[Any] = None,
                    form: Optional[multipart.Easy] = None,
-
                    headers: Optional[Dict[str, str]] = None,
-                   o: Options | None = None) -> Response:
+                   o: Optional[Options] = None) -> Response:
         return await self.request(method='POST', path=path, query_params=q_params, json=json, form=form, data=data,
                                   headers=headers, option=o)
 
-    async def put(self, path: str | None = None, *,
+    async def put(self, path: Optional[str] = None, *,
                   q_params: Q_PARAMS_TYPE = None,
                   json: Optional[Any] = None,
                   data: Optional[Any] = None,
                   form: Optional[multipart.Easy] = None,
-
                   headers: Optional[Dict[str, str]] = None,
-                  o: Options | None = None) -> Response:
+                  o: Optional[Options] = None) -> Response:
         return await self.request(method='PUT', path=path, query_params=q_params, json=json, form=form, data=data,
                                   headers=headers, option=o)
 
-    async def patch(self, path: str | None = None, *,
+    async def patch(self, path: Optional[str] = None, *,
                     q_params: Q_PARAMS_TYPE = None,
                     json: Optional[Any] = None,
                     data: Optional[Any] = None,
                     form: Optional[multipart.Easy] = None,
-
                     headers: Optional[Dict[str, str]] = None,
-                    o: Options | None = None) -> Response:
+                    o: Optional[Options] = None) -> Response:
         return await self.request(method='PATCH', path=path, query_params=q_params, json=json, form=form, data=data,
                                   headers=headers, option=o)
 
-    async def delete(self, path: str | None = None, *,
+    async def delete(self, path: Optional[str] = None, *,
                      q_params: Q_PARAMS_TYPE = None,
                      json: Optional[Any] = None,
                      data: Optional[Any] = None,
                      form: Optional[multipart.Easy] = None,
-
                      headers: Optional[Dict[str, str]] = None,
-                     o: Options | None = None) -> Response:
+                     o: Optional[Options] = None) -> Response:
         return await self.request(method='DELETE', path=path, query_params=q_params, json=json, form=form, data=data,
                                   headers=headers,
                                   option=o)
 
-    async def trace(self, path: str | None = None, *,
+    async def trace(self, path: Optional[str] = None, *,
                     q_params: Q_PARAMS_TYPE = None,
                     json: Optional[Any] = None,
                     data: Optional[Any] = None,
                     form: Optional[multipart.Easy] = None,
                     headers: Optional[Dict[str, str]] = None,
-                    o: Options | None = None) -> Response:
+                    o: Optional[Options] = None) -> Response:
         return await self.request(method='TRACE', path=path, query_params=q_params, json=json, form=form, data=data,
                                   headers=headers, option=o)
 
