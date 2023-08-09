@@ -345,3 +345,18 @@ async def test_request_with_middleware_end():
         assert True
 
     assert data['ok']
+
+
+@pytest.mark.integtest
+async def test_request_session_params():
+    http = Http(
+        host=ECHO_URL,
+        option=Options(
+            session_kwargs={
+                'cookies': {"cookie1": "value1", "cookie2": "value2"},
+            }
+        )
+    )
+    res = await http.get()
+
+    assert res.json['request']['cookies'] == {'cookie1': 'value1', 'cookie2': 'value2'}
