@@ -1,7 +1,7 @@
 import sys
 from typing import Dict, Any, Awaitable, Optional, Union, Tuple, List
 
-if sys.version_info > (3, 7):
+if sys.version_info >= (3, 8):
     from typing import Protocol
 else:
     Protocol = object
