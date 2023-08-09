@@ -1,4 +1,10 @@
-from typing import Protocol, Dict, Any, Awaitable, Optional, Union, Tuple, List
+import sys
+from typing import Dict, Any, Awaitable, Optional, Union, Tuple, List
+
+if sys.version_info > (3, 7):
+    from typing import Protocol
+else:
+    Protocol = object
 
 
 class MiddlewareStart(Protocol):
