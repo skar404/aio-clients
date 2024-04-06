@@ -1,4 +1,5 @@
 import os
+from hashlib import sha256
 
 import aiohttp
 import pytest
@@ -269,15 +270,37 @@ async def test_request_query_params():
     }
 
 
+async def get_ssl_fingerprint(url):
+    """
+    Get SSL fingerprint from url
+    :param url:
+    :return:
+    """
+
+    async def fetch(session, url):
+        async with session.get(url) as response:
+            await response.text()
+
+    conn = aiohttp.TCPConnector(ssl=False)
+    async with aiohttp.ClientSession(connector=conn) as session:
+        await fetch(session, url)
+
+        ssl_object = next(iter(session._connector._conns.values()))[0][0].transport._ssl_protocol._extra['ssl_object']
+        cert = ssl_object.getpeercert(binary_form=True)
+        fingerprint = sha256(cert).hexdigest()
+        return fingerprint
+
+
 @pytest.mark.integtest
 async def test_request_with_correct_fingerprint():
+    fingerprint = await get_ssl_fingerprint('https://ulock.org/')
     http = Http(
         host='https://ulock.org/',
         option=Options(
             is_json=False,
             is_ssl=None,
             request_kwargs={
-                'fingerprint': bytes.fromhex('DAB4EC8A125FF4C539C2D1BFB34B2B68A59003705A1BEB51917D9AF614C6E519')}
+                'fingerprint': bytes.fromhex(fingerprint)}
         ))
     await http.get()
 
