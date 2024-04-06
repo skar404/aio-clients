@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
 from aiohttp import ClientTimeout, TraceConfig, ClientResponse
-from multidict import CIMultiDictProxy
+from multidict import CIMultiDictProxy  # type: ignore
 
 from .__version__ import __version__
 from .types import MiddlewareStart, MiddlewareEnd
