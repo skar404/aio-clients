@@ -299,10 +299,11 @@ async def test_request_with_correct_fingerprint():
         option=Options(
             is_json=False,
             is_ssl=None,
-            request_kwargs={
-                'fingerprint': bytes.fromhex(fingerprint)}
+            request_kwargs={'fingerprint': bytes.fromhex(fingerprint)},
+            is_close_session=True,
         ))
     await http.get()
+    assert True
 
 
 @pytest.mark.integtest
@@ -312,7 +313,8 @@ async def test_request_with_broken_fingerprint():
         option=Options(
             is_json=False,
             is_ssl=None,
-            request_kwargs={'fingerprint': bytes.fromhex('0' * 64)}
+            request_kwargs={'fingerprint': bytes.fromhex('0' * 64)},
+            is_close_session=True,
         ))
     try:
         await http.get()
