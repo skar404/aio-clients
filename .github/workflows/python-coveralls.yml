@@ -33,6 +33,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
+          curl https://ulock.org 
           python -m pip install --upgrade pip 
           python -m pip install poetry
           poetry config virtualenvs.create false --local
