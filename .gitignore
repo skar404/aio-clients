@@ -1,5 +1,5 @@
 # Project
-
+.ruff_cache/
 *.env
 
 ### JetBrains template
